@@ -1,0 +1,28 @@
+@media only screen and (max-width: 600px) {
+   
+    .round{
+        flex-wrap: wrap;
+    }
+
+    #map-log,footer{
+        display: none;
+    }
+
+    .settings div select{
+        width: 100px;
+    }
+
+    .map{
+        margin-top: 10px;
+        width: 35vw;
+    }
+
+    .settings{
+        margin-top: 100px;
+    }
+
+    .container{
+        height: fit-content;
+    }
+
+}
