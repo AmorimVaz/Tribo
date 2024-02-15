@@ -210,7 +210,10 @@ button:focus{
 }
 
 
-body {
+.bg-redondo {
+  overflow: hidden;
+}
+body{
   overflow-x: hidden;
 }
 .squares li {
@@ -219,7 +222,7 @@ body {
   display: block;
   position: absolute;
   bottom: -40px;
-  animation: up 2s infinite alternate;
+  animation: up 2s infinite alternate backwards;
   z-index:-1;
   /* background-color: rgba(255, 255, 255, 0.05); */
   background-size: cover;
