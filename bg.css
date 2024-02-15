@@ -211,7 +211,7 @@ button:focus{
 
 
 body {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 .squares li {
   width: 40px;
