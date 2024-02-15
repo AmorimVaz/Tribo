@@ -1,8 +1,3 @@
-/* for (let i = 1; i < 10; i++) {
-    document.body.innerHTML += `<div class='light x${i}'></div>`
-} */
-
-/* background squares */
 const ulSquares = document.querySelector("ul.squares");
 
 for (let i = 0; i < 30; i++) {
