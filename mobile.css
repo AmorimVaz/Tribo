@@ -25,4 +25,8 @@
         height: fit-content;
     }
 
+    .bg-redondo{
+        overflow: visible;
+    }
+
 }
