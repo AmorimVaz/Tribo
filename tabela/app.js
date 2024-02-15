@@ -20,17 +20,14 @@
 */
 //#endregion
 
-const round_max = 5;
-const vagas = 8;
+const round_max = 4;
+const vagas = 5;
 const vit = 3;
-const der = 3;
+const der = 2;
+const deciders = [7];
 var round = 0;
 
 var roundResult = []
-if(localStorage.getItem("rounds") != null ){
-    roundResult = localStorage.getItem("rounds");
-    console.log(roundResult);
-}
 
 const miolo = document.getElementById("apoka");
 generatedMatchs();
@@ -49,6 +46,11 @@ function generatedMatchs(){
     
     const rnd = document.getElementById("round_"+round);
     rnd.innerHTML = `<span class="round-title">Round ${round}</span>`;
+    
+/*     let btnNext = document.createElement("button");
+    btnNext.innerText = "Teste"
+    rnd.appendChild(btnNext) */
+
     
     let groups = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
     teams.forEach( t =>{
@@ -82,12 +84,20 @@ function generatedMatchs(){
         let teamsGroupAux = teamsGroup;
         let indexA = 0;
 
-        for (let count = 0; count < teamsGroup.length/2; count++) {
-            if(teamsGroupAux[indexA].v == vit || teamsGroupAux[indexA].d == der) continue;
+        for (let count = 0; count < teamsGroup.length/2; count++) {          
             let group = teamsGroupAux[indexA].rnd;
+            if(teamsGroupAux[indexA].v == vit || teamsGroupAux[indexA].d == der) continue;
             let indexB = teamsGroupAux.length-1;
+            
             let bo = (teamsGroupAux[indexA].v+1 == vit || teamsGroupAux[indexA].d+1 == der) ? 3 : 1;
 
+            if(round == 1){
+                console.log(teamsGroupAux)
+                teamsGroupAux.sort((a, b) => (a.id > b.id) ? 1 : -1)
+            }
+
+            if(round >= 5)
+                console.log(teamsGroupAux)
             while(duplicatedMatch(teamsGroupAux[indexA], teamsGroupAux[indexB])){
                 console.log(`[${group}] jogo duplicado: ${teamsGroupAux[indexA].name} x ${teamsGroupAux[indexB].name}`)
                 indexB--;                 
@@ -100,12 +110,12 @@ function generatedMatchs(){
             let matchBoxSub = document.createElement("div");
             matchBoxSub.className = "match-box-sub"
             matchBox.appendChild(matchBoxSub);
-            
+
             matchBoxSub.appendChild(createElementTeam(teamsGroupAux[indexA], 1));
             matchBoxSub.appendChild(createElementTeam(teamsGroupAux[indexB], 2));
-            
+
             rnd.appendChild(matchBox);
-            
+           
             console.log(`${group}: ${teamsGroupAux[indexA].name} x ${teamsGroupAux[indexB].name}`);
             teamsGroupAux= teamsGroupAux.filter( team => team != teamsGroupAux[indexB]);
             teamsGroupAux = teamsGroupAux.filter( team => team != teamsGroupAux[indexA]);
@@ -116,7 +126,6 @@ function generatedMatchs(){
         roundResult = [structRounds(round)];
     
     roundResult[round-1] = structRounds(round);
-    localStorage.setItem("rounds", JSON.stringify(roundResult));
     updateWinner();
 
     if(round < round_max)
@@ -128,7 +137,6 @@ function duplicatedMatch(teamA, teamB){
         return true;
     return false;
 }
-
 
 function updateWinner(rnd){
     teams.forEach(t => {
@@ -210,12 +218,10 @@ function selectWinner(evnt, team){
     let x = round-rnd_click;
     for(let i = 0; i < x; i++) {
         roundResult.pop();
-        localStorage.setItem("rounds", JSON.stringify(roundResult));
     }
     round = rnd_click;    
     updateWinner();
     roundResult[rnd_click-1] = structRounds(rnd_click);
-    localStorage.setItem("rounds", JSON.stringify(roundResult));
     updadeMatch(teamWin.id, teamLose.id, changeResult);
     if(x>0)
         generatedMatchs();
@@ -269,7 +275,6 @@ function changeScore(){
         }); 
         t.score = score;
     });
-    localStorage.setItem("teams", JSON.stringify(teams));
     result();
 }
 
